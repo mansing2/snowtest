@@ -1,0 +1,41 @@
+if((!gs.nil(executionResult.errorMessages))) {
+	
+	
+	gs.include('ArtifactoryErrorCodes');
+		
+	errors = {};
+	
+	
+	// LINK ERROR CODE AND ERROR MESSAGE HERE
+
+	errors[1] = ArtifactoryErrorCodes.INCORRECT_PROTOCOL;
+	
+	errors[2] = ArtifactoryErrorCodes.INCORRECT_PORT_IP;
+	
+	errors[3] = ArtifactoryErrorCodes.INCORRECT_REMOTEHOST;
+	
+	errors[4] = ArtifactoryErrorCodes.INCORRECT_ENTRIES_ARTIFACTORY;
+	
+	errors[5] = ArtifactoryErrorCodes.INCORRECT_INPUT_PATH;
+	
+	errors[6] = ArtifactoryErrorCodes.OUTPUT_PATH_NOT_EXIST;
+	
+    errors[7] = ArtifactoryErrorCodes.ACCESS_DENIED_OUTPUTPATH;
+	
+	errors[17] = ArtifactoryErrorCodes.INCORRECT_PROTOCOL_CREDENTIALS_OR_REPOSITORY_NAME;
+	
+	
+    // DO NOT TOUCH WHAT IS BELOW THIS
+    activityOutput.status = "failure";
+    var match = /(?:\[error\]:|Exit status:) (\d+)/.exec(executionResult.errorMessages); 
+    if(match){
+        var code = match[1];
+        activityOutput.error = errors[code];
+		//+ executionResult.errorMessages;
+                    } else {
+        activityOutput.error = "An unknown error occurred.";
+        activityOutput.error += executionResult.errorMessages;
+    }
+} else {
+    activityOutput.status = "success";
+}

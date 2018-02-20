@@ -1,0 +1,24 @@
+if (workflow.scratchpad.result.windows == true) {
+	 lookup_id = 3;
+} else {
+	 lookup_id = 4;
+}
+
+var return_result = {
+	'status': undefined,
+	'error': undefined,
+	'data': {},
+};
+
+// check for cases when the activity turns red and doesnt execute post processing. E.g. mid server is down
+if (data.get(lookup_id).status != undefined) {
+  
+ return_result.status = data.get(lookup_id).status;
+ return_result.error = data.get(lookup_id).error;
+  
+} else {
+ return_result.status = 'failure';
+ return_result.error = 'Unknow error occurred';
+  
+}
+	workflow.scratchpad.return_result = return_result;
